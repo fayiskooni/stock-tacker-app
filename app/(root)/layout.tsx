@@ -1,11 +1,7 @@
 import Header from "@/components/Header";
 import React from "react";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const Layout = async ({ children }: { children : React.ReactNode }) => {
   return (
     <main className="min-h-screen text-gray-400">
         <Header />  
@@ -13,3 +9,4 @@ export default function RootLayout({
     </main>
   );
 }
+export default Layout
