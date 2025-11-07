@@ -31,7 +31,6 @@ export const signUpWithEmail = async ({
         },
       });
     }
-console.log(response, "res");
 
     return { success: true, data: response };
   } catch (e) {
