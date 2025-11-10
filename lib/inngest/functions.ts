@@ -4,10 +4,10 @@ import {
   PERSONALIZED_WELCOME_EMAIL_PROMPT,
 } from "@/lib/inngest/prompts";
 import { sendNewsSummaryEmail, sendWelcomeEmail } from "@/lib/nodemailer";
-import { getAllUsersForNewsEmail } from "../actions/user.actions";
+import { getAllUsersForNewsEmail } from "@/lib/actions/user.actions";
 import { getWatchlistSymbolsByEmail } from "../actions/watchlist.action";
+import { getFormattedTodayDate } from "@/lib/utils";
 import { getNews } from "../actions/finnhub.action";
-import { formatDateToday } from "@/lib/utils";
 
 export const sendSignUpEmail = inngest.createFunction(
   { id: "sign-up-email" },
@@ -94,7 +94,10 @@ export const sendDailyNewsSummary = inngest.createFunction(
     });
 
     // Step #3: (placeholder) Summarize news via AI
-    const userNewsSummaries: { user: User; newsContent: string | null }[] = [];
+    const userNewsSummaries: {
+      user: UserForNewsEmail;
+      newsContent: string | null;
+    }[] = [];
 
     for (const { user, articles } of results) {
       try {
@@ -129,7 +132,7 @@ export const sendDailyNewsSummary = inngest.createFunction(
 
           return await sendNewsSummaryEmail({
             email: user.email,
-            date: formatDateToday,
+            date: getFormattedTodayDate(),
             newsContent,
           });
         })
