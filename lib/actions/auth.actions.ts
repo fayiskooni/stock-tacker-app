@@ -16,20 +16,25 @@ export const signUpWithEmail = async ({
   try {
     const response = await auth.api.signUpEmail({
       body: { email, password, name: fullName },
+      headers: await headers(),
     });
 
     if (response) {
-      await inngest.send({
-        name: "app/user.created",
-        data: {
-          email,
-          name: fullName,
-          country,
-          investmentGoals,
-          riskTolerance,
-          preferredIndustry,
-        },
-      });
+      try {
+        await inngest.send({
+          name: "app/user.created",
+          data: {
+            email,
+            name: fullName,
+            country,
+            investmentGoals,
+            riskTolerance,
+            preferredIndustry,
+          },
+        });
+      } catch (inngestError) {
+        console.error("Failed to send inngest event:", inngestError);
+      }
     }
 
     return { success: true, data: response };
@@ -41,7 +46,10 @@ export const signUpWithEmail = async ({
 
 export const signInWithEmail = async ({ email, password }: SignInFormData) => {
   try {
-    const response = await auth.api.signInEmail({ body: { email, password } });
+    const response = await auth.api.signInEmail({
+      body: { email, password },
+      headers: await headers(),
+    });
 
     return { success: true, data: response };
   } catch (e) {
