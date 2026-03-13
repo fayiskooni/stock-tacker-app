@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Stock Market Dashboard
 
-## Getting Started
+A real-time stock tracking platform with live price charts and AI-personalized daily email digests.
 
-First, run the development server:
+🔗 **Live:** https://stock-tacker-app.vercel.app
 
+---
+
+## Features
+
+- Real-time stock charts via TradingView widgets
+- Stock search powered by Finnhub API
+- Personal watchlist management
+- AI-personalized daily email digest based on watchlist
+- Background job processing via Inngest
+- Gemini AI for generating personalized market summaries
+- Email delivery via Nodemailer
+
+## Tech Stack
+
+**Frontend:** Next.js 15, React 19, Tailwind CSS, Radix UI
+
+**Backend:** Next.js Server Actions, Next.js API Routes
+
+**Database:** MongoDB with Mongoose
+
+**Auth:** Better Auth with MongoDB adapter
+
+**Background Jobs:** Inngest (cron + serverless queues)
+
+**External APIs:** Finnhub API, TradingView Widgets
+
+**AI:** Gemini 2.5 Flash Lite
+
+**Email:** Nodemailer (SMTP)
+
+## How It Works
+
+1. User signs up with email and investment preferences
+2. Gemini AI generates a personalized welcome email via Inngest
+3. User searches stocks via Finnhub and adds them to their watchlist
+4. TradingView widgets display live price charts
+5. Every day at 12PM, Inngest fetches watchlist news from Finnhub and sends a Gemini-summarized email digest
+
+## Run Locally
 ```bash
+git clone https://github.com/fayiskooni/YOUR_REPO_NAME
+npm install
+
+# Add environment variables
+# MONGODB_URI, FINNHUB_API_KEY, GEMINI_API_KEY
+# INNGEST_EVENT_KEY, INNGEST_SIGNING_KEY
+# SMTP credentials for Nodemailer
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
